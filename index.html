@@ -1,0 +1,138 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <script defer src="https://friconix.com/cdn/friconix.js"> </script>
+    <script src="https://kit.fontawesome.com/52a8494d78.js" crossorigin="anonymous"></script>
+
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Music Player</title>
+
+<style>
+body{
+   background-color: #FAF4DD; 
+}
+li{
+    padding: 12px;
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    font-size: 20px;
+}
+li:hover{
+    cursor: pointer;
+    color:green;
+    background-color: white;
+}
+li:active{
+    color: blue;
+}
+
+#song{
+ 
+    text-align: left;
+}
+progress{
+    width:80%;
+    margin:10px;
+}
+
+#gra1,#gra2{
+    color: cadetblue;
+}
+#gra1:hover{
+    color: black;
+}
+#gra2:hover{
+    color: black;
+}
+
+</style>
+
+
+</head>
+<body>
+ <center>
+     <iframe src="https://giphy.com/embed/R4f1AlLMgeMuI" width="480" height="360" frameBorder="0" class="giphy-embed" allowFullScreen></iframe><p></p>
+
+<span id="cur"></span><em><span style="background-color: rgb(252, 155, 171);" id="current"></span></em>
+<br>
+<br>
+</center>
+
+
+<audio id="player" ontimeupdate="updateProgress()">
+    <source id="source">
+    Audio Not Supported
+</audio>
+<center>
+<div id="controls">
+    <i id="gra1" class="fas fa-play-circle fa-3x"  onclick="playAudio()" ></i>
+    <i id="gra2" class="fas fa-pause-circle fa-3x"  onclick="pauseAudio()"></i>
+    <progress id="progress" value="0" max="100"></progress>
+  <p style="font-family: sans-serif;color: white;"><span style="background-color: darkcyan; padding: 6px;">Volume:</span></p>
+  <i class="fas fa-volume-down"></i>
+  <input type="range" id="volumeSlider" min="0" max="1" step="0.01">
+  <i class="fas fa-volume-up"></i>
+</div>
+
+    <div id="song" >
+        <h3 style="margin-left:25px ; font-family: Verdana, Geneva, Tahoma, sans-serif;font-size: 36px; "><span style="background-color: cyan;padding: 6px;">SONGS :</span></h3>
+    
+</div >
+
+</center>
+<script>
+    const songs=[
+        "The Weeknd - Blinding Lights.mp3",
+        "The Chainsmokers Ft. Daya -Don't Let Me Down.mp3",
+        "Jawsh 685 Ft. Jason Derulo-Savage Love Laxed Siren Beat.mp3",
+        "death bed.mp3",
+        "Calvin Harris-My Way.mp3"
+    ]
+const createSongList=()=>{
+    const list=document.createElement('ol')
+    for(let i=0;i<songs.length;i++){
+        const item=document.createElement('li')
+        item.appendChild(document.createTextNode(songs[i]))
+        list.appendChild(item)
+    }
+    return list
+}
+document.getElementById('song').appendChild(createSongList())
+
+song.onclick=(e)=>{
+    console.log(e)
+    const clickedItem=e.target
+    const source=document.getElementById("source")
+    source.src=clickedItem.innerHTML
+
+document.getElementById("cur").innerHTML="Currently Playing : "
+document.getElementById("current").innerHTML=clickedItem.innerHTML
+
+    player.load()
+    player.play()
+}
+
+const playAudio =()=>{
+    if(player.readyState){
+        player.play()
+    }
+}
+const pauseAudio=() =>{
+    player.pause()
+}
+const slider=document.getElementById("volumeSlider")
+slider.oninput=(e)=>{
+    const volume=e.target.value
+    player.volume=volume
+}
+
+const updateProgress=()=>{
+    if(player.currentTime>0){
+        const progressBar=document.getElementById('progress')
+        progressBar.value=(player.currentTime/player.duration)*100
+    }
+}
+
+</script>
+</body>
+</html>
